@@ -1,6 +1,9 @@
 package rational;
 
+import rational.model.Attack;
 import rational.model.UnitModel;
+
+import java.util.List;
 
 /**
  * Created by awest on 11/14/14.
@@ -20,6 +23,6 @@ public interface ToHitCombatService {
             {0,3,3,3,3,3,3,3,3,3,4}
     };
 
-    public int getNumberOfHits(UnitModel attacker, UnitModel defender);
+    public List<Attack> rollToHits(List<Attack> attacks);
 
 }

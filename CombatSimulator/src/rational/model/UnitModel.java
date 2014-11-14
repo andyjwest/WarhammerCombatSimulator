@@ -121,6 +121,18 @@ public class UnitModel {
     }
 
     public int getStrength() {
+        //FIXME I don't like overriding default gets and sets.....
+        if(null != weapon) {
+            if (null != weapon.getStrength()) {
+                return weapon.getStrength();
+            } else if (null != weapon.getStrengthBonus()) {
+                return this.strength + weapon.getStrengthBonus();
+            }
+        }
+        return strength;
+    }
+
+    public int getStrengthWithWeapon() {
         if(null != weapon) {
             if (null != weapon.getStrength()) {
                 return weapon.getStrength();

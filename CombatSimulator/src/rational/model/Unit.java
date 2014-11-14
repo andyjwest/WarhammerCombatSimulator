@@ -5,6 +5,7 @@ import rational.enums.SpecialRuleTypeEnum;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 public class Unit implements Comparator<Unit>, Comparable<Unit> {
@@ -168,13 +169,13 @@ public class Unit implements Comparator<Unit>, Comparable<Unit> {
                 modifiedLeadership + "... ");
         Dice die = Dice.getD6();
         int test = 0;
-        int[] rolls;
+        List<Integer> rolls;
         if(this.getUnitModel().getSpecialRules().contains(SpecialRuleTypeEnum.COLD_BLOODED)){
             rolls = die.rollSeparateDice(3);
         }else {
             rolls = die.rollSeparateDice(2);
         }
-        System.out.println("    " + Arrays.toString(rolls));
+        System.out.println("    " + rolls.toString());
         int highest = 0;
         for (int i : rolls) {
             test += i;
@@ -317,12 +318,12 @@ public class Unit implements Comparator<Unit>, Comparable<Unit> {
     public int rollCombatDice(Unit defender, Integer amt, int difficulty, boolean reRollAllowed) {
         Dice d6 = Dice.getD6();
         Random rand = new Random();
-        int[] attacks = d6.rollSeparateDice(amt);
-        System.out.println("    " + Arrays.toString(attacks));
+        List<Integer> attacks = d6.rollSeparateDice(amt);
+        System.out.println("    " + attacks.toString());
 
         int hits = 0;
         for(int i=0; i<amt; i++) {
-            if(attacks[i] >= difficulty){
+            if(attacks.get(i) >= difficulty){
                 hits++;
             }
         }
@@ -330,7 +331,7 @@ public class Unit implements Comparator<Unit>, Comparable<Unit> {
         if(this.getUnitModel().getSpecialRules().contains(SpecialRuleTypeEnum.PREDATORY_FIGHTER) && reRollAllowed){
             int additionalAttacks = 0;
             for(int i=0; i<amt; i++) {
-                if(attacks[i] == 6){
+                if(attacks.get(i) == 6){
                     additionalAttacks++;
                 }
             }
@@ -355,12 +356,11 @@ public class Unit implements Comparator<Unit>, Comparable<Unit> {
     }
 
     private int rollSave(int amt, int save){
-        Dice d6 = Dice.getD6();
         int wounds = amt;
-        int[] saves = d6.rollSeparateDice(amt);
-        System.out.println("    " + Arrays.toString(saves));
-        for(int i=0; i<amt; i++) {
-            if(saves[i] >= save){
+        List<Integer> saves = Dice.getD6().rollSeparateDice(amt);
+        System.out.println("    " + saves.toString());
+        for(Integer roll : saves){
+            if(roll >= save){
                 wounds--;
             }
         }
