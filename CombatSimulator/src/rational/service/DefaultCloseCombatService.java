@@ -1,10 +1,7 @@
 package rational.service;
 
-import rational.model.Dice;
-import rational.model.SimultaneousCombatStage;
+import rational.model.*;
 import rational.enums.SpecialRuleTypeEnum;
-import rational.model.Unit;
-import rational.model.CombatStage;
 
 import java.util.*;
 
@@ -15,8 +12,8 @@ public class DefaultCloseCombatService implements CloseCombatService {
     public Unit resolveCombat(Unit unitA, Unit unitB) {
 
 
-        List<Unit> attackers = new ArrayList<>();
-        List<Unit> defenders = new ArrayList<>();
+        List<Unit> attackers = new ArrayList<Unit>();
+        List<Unit> defenders = new ArrayList<Unit>();
         attackers.add(unitA);
         if(null != unitA.getMounts()){
             attackers.add(unitA.getMounts());
@@ -83,12 +80,12 @@ public class DefaultCloseCombatService implements CloseCombatService {
     }
 
     private Queue<CombatStage> establishInitiativeOrder(List<Unit> attackingArmyUnits, List<Unit> defendingArmyUnits) {
-        Queue<CombatStage> order = new LinkedList<>();
+        Queue<CombatStage> order = new LinkedList<CombatStage>();
 
-        List<Unit> attackFirst = new ArrayList<>();
-        List<Unit> attackLast = new ArrayList<>();
-        Map<Integer, SimultaneousCombatStage> simultaneousStages = new HashMap<>();
-        List<CombatStage> stages = new ArrayList<>();
+        List<Unit> attackFirst = new ArrayList<Unit>();
+        List<Unit> attackLast = new ArrayList<Unit>();
+        Map<Integer, SimultaneousCombatStage> simultaneousStages = new HashMap<Integer, SimultaneousCombatStage>();
+        List<CombatStage> stages = new ArrayList<CombatStage>();
 
         for(Unit unit : attackingArmyUnits){
             if(unit.getUnitModel().getSpecialRules().contains(SpecialRuleTypeEnum.ALWAYS_STRIKE_FIRST)){
@@ -113,7 +110,7 @@ public class DefaultCloseCombatService implements CloseCombatService {
         if(!attackFirst.isEmpty()) {
             CombatStage firstStage;
             if (attackFirst.size() > 1) {
-                Map<Unit, Unit> simultaneous = new HashMap<>();
+                Map<Unit, Unit> simultaneous = new HashMap<Unit, Unit>();
                 for(Unit unit : attackFirst) {
                     for(Unit compare : attackFirst){
                         if(!unit.equals(compare) && !compare.isMount()){
@@ -145,7 +142,7 @@ public class DefaultCloseCombatService implements CloseCombatService {
                     int attackOrder = unit.compareTo(compare);
                     CombatStage stage = null;
                     if (attackOrder == 0) {
-                        Map<Unit, Unit> simultaneous = new HashMap<>();
+                        Map<Unit, Unit> simultaneous = new HashMap<Unit, Unit>();
                         for(Unit compare2 : defendingArmyUnits){
                             if(compare2.getUnitInitiative() == unit.getUnitInitiative()){
                                 if(!compare2.isMount()){
@@ -176,7 +173,7 @@ public class DefaultCloseCombatService implements CloseCombatService {
                     int attackOrder = unit.compareTo(compare);
                     CombatStage stage = null;
                     if (attackOrder == 0) {
-                        Map<Unit, Unit> simultaneous = new HashMap<>();
+                        Map<Unit, Unit> simultaneous = new HashMap<Unit, Unit>();
                         for(Unit compare2 : attackingArmyUnits){
                             if(compare2.getUnitInitiative() == unit.getUnitInitiative()){
                                 if(!compare2.isMount()){
@@ -209,7 +206,7 @@ public class DefaultCloseCombatService implements CloseCombatService {
 
 
     public Set<CombatStage> createCombatStages(List<Unit> attackingArmyUnits, List<Unit> defendingArmyUnits){
-        Set<CombatStage> stages = new HashSet<>();
+        Set<CombatStage> stages = new HashSet<CombatStage>();
 
         for(Unit unit : attackingArmyUnits){
             for (Unit compare : defendingArmyUnits) {
@@ -221,7 +218,7 @@ public class DefaultCloseCombatService implements CloseCombatService {
                     }else if(attackOrder == -1){
                         stage = new CombatStage(compare, unit, compare.getUnitInitiative());
                     }else if (attackOrder == 0) {
-                        Map<Unit, Unit> simultaneous = new HashMap<>();
+                        Map<Unit, Unit> simultaneous = new HashMap<Unit, Unit>();
                         for(Unit compare2 : defendingArmyUnits){
                             if(compare2.getUnitInitiative() == unit.getUnitInitiative()){
                                 if(!compare2.isMount()){
@@ -252,5 +249,21 @@ public class DefaultCloseCombatService implements CloseCombatService {
             }
         }
         return false;
+    }
+
+    public void attack(Unit unitA, Unit unitB){
+        //figure out who goes first
+
+        //attack with the models that strike first
+        UnitModel modelsInFrontRank[] = unitA.getModels()[0];
+
+    }
+
+    public List<Attack> attack(UnitModel attacker, UnitModel defender){
+        List<Attack> attacks = new ArrayList<Attack>();
+        for (int i = 0; i <= attacker.getAttacks(); i++){
+            attacks.add(new Attack(attacker, defender));
+        }
+        return attacks;
     }
 }

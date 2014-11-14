@@ -16,12 +16,24 @@ public class Attack {
     Integer rollToWound;
     Boolean hit;
     Boolean wound;
-    int armorSave;
+    Integer armorSave;
     Boolean armorSaveMade;
-    int wardSave;
+    Integer wardSave;
     Boolean wardSaveMade;
 
-    List<SpecialRuleTypeEnum> specialRules;
+    List<SpecialRuleTypeEnum> attackerSpecialRules;
+    List<SpecialRuleTypeEnum> defenderSpecialRules;
+
+    public Attack(UnitModel attacker, UnitModel defender){
+        setAttackerWeaponSkill(attacker.getWeaponSkill());
+        setDefenderWeaponSkill(defender.getWeaponSkill());
+        setAttackerStrength(attacker.getStrengthWithWeapon());
+        setDefenderToughness(defender.getToughness());
+        setArmorSave(defender.getArmorSave());
+        setWardSave(defender.getWardSave());
+        setAttackerSpecialRules(attacker.getSpecialRules());
+        setDefenderSpecialRules(defender.getSpecialRules());
+    }
 
     public int getAttackerStrength() {
         return attackerStrength;
@@ -47,8 +59,8 @@ public class Attack {
         this.wound = wound;
     }
 
-    public List<SpecialRuleTypeEnum> getSpecialRules() {
-        return specialRules;
+    public List<SpecialRuleTypeEnum> getAttackerSpecialRules() {
+        return attackerSpecialRules;
     }
 
     public int getAttackerWeaponSkill() {
@@ -75,8 +87,8 @@ public class Attack {
         this.defenderToughness = defenderToughness;
     }
 
-    public void setSpecialRules(List<SpecialRuleTypeEnum> specialRules) {
-        this.specialRules = specialRules;
+    public void setAttackerSpecialRules(List<SpecialRuleTypeEnum> attackerSpecialRules) {
+        this.attackerSpecialRules = attackerSpecialRules;
     }
 
     public Integer getRollToHit() {
@@ -95,11 +107,11 @@ public class Attack {
         this.rollToWound = rollToWound;
     }
 
-    public int getArmorSave() {
+    public Integer getArmorSave() {
         return armorSave;
     }
 
-    public void setArmorSave(int armorSave) {
+    public void setArmorSave(Integer armorSave) {
         this.armorSave = armorSave;
     }
 
@@ -111,11 +123,11 @@ public class Attack {
         this.armorSaveMade = armorSaveMade;
     }
 
-    public int getWardSave() {
+    public Integer getWardSave() {
         return wardSave;
     }
 
-    public void setWardSave(int wardSave) {
+    public void setWardSave(Integer wardSave) {
         this.wardSave = wardSave;
     }
 
@@ -125,5 +137,13 @@ public class Attack {
 
     public void setWardSaveMade(Boolean wardSaveMade) {
         this.wardSaveMade = wardSaveMade;
+    }
+
+    public List<SpecialRuleTypeEnum> getDefenderSpecialRules() {
+        return defenderSpecialRules;
+    }
+
+    public void setDefenderSpecialRules(List<SpecialRuleTypeEnum> defenderSpecialRules) {
+        this.defenderSpecialRules = defenderSpecialRules;
     }
 }
