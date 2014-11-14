@@ -313,4 +313,5 @@ public class UnitModel {
     public void setChampion(UnitModel champion) {
         this.champion = champion;
     }
+
 }

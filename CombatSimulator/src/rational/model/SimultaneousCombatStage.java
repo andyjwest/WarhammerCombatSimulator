@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SimultaneousCombatStage extends CombatStage {
 
-    public Map<Unit, Unit> combatants = new HashMap<>();
+    public Map<Unit, Unit> combatants = new HashMap<Unit, Unit>();
 
     public SimultaneousCombatStage(Map<Unit, Unit> combatants, int initiative) {
         this.combatants = combatants;

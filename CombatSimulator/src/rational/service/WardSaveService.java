@@ -1,4 +1,4 @@
-package rational;
+package rational.service;
 
 import rational.model.Attack;
 

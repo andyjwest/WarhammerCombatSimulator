@@ -1,4 +1,4 @@
-package rational;
+package rational.service;
 
 import rational.model.Attack;
 import rational.model.Dice;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by awest on 11/14/14.
  */
-public class ToHitDefaultCombatService implements ToHitCombatService{
+public class ToHitDefaultCombatService implements ToHitCombatService {
 
 
     public List<Attack> rollToHits(List<Attack> attacks){
