@@ -186,7 +186,7 @@ public class Unit implements Comparator<Unit>, Comparable<Unit> {
         if (this.getUnitModel().getSpecialRules().contains(SpecialRuleTypeEnum.COLD_BLOODED)) {
             test -= highest;
         }
-        if(rolls[0] == 1 && rolls[1] == 1){
+        if(rolls.get(0) == 1 && rolls.get(1) == 1){
             return true;
         }
         return test + modifier <= this.leadership;
