@@ -24,7 +24,7 @@ public class UnitModel {
     private Weapon weapon;
     private Armor armor;
     private Armor shield;
-    private List<SpecialRuleTypeEnum> specialRules = new ArrayList<>();
+    private List<SpecialRuleTypeEnum> specialRules = new ArrayList<SpecialRuleTypeEnum>();
     private int rank;
     private int file;
     private boolean championHero;
@@ -121,6 +121,18 @@ public class UnitModel {
     }
 
     public int getStrength() {
+        //FIXME I don't like overriding default gets and sets.....
+        if(null != weapon) {
+            if (null != weapon.getStrength()) {
+                return weapon.getStrength();
+            } else if (null != weapon.getStrengthBonus()) {
+                return this.strength + weapon.getStrengthBonus();
+            }
+        }
+        return strength;
+    }
+
+    public int getStrengthWithWeapon() {
         if(null != weapon) {
             if (null != weapon.getStrength()) {
                 return weapon.getStrength();
@@ -176,7 +188,7 @@ public class UnitModel {
     }
 
     public List<SpecialRuleTypeEnum> getSpecialRules() {
-        List<SpecialRuleTypeEnum> modifiedList = new ArrayList<>(specialRules);
+        List<SpecialRuleTypeEnum> modifiedList = new ArrayList<SpecialRuleTypeEnum>(specialRules);
         if(null != this.armor) modifiedList.addAll(armor.getSpecialRules());
         if(null != this.shield) modifiedList.addAll(shield.getSpecialRules());
         if(null != this.weapon) modifiedList.addAll(this.weapon.getSpecialRules());
@@ -301,4 +313,5 @@ public class UnitModel {
     public void setChampion(UnitModel champion) {
         this.champion = champion;
     }
+
 }
